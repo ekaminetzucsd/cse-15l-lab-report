@@ -7,7 +7,7 @@
 ## Heading Bruh
 
 [Link Bruh](./index.md)
-![Image Bruh](http://ih3.redbubble.net/image.29296497.2511/fc,550x550,white.u3.jpg)
+![VS Code and Github Desktop using combined 2G of ram, significant on even a gaming laptop](./resources.png)
 >Block bruh
 
 * list
@@ -27,5 +27,3 @@ public class bruh{
 	}
 }
 ```
-
-edit bruh

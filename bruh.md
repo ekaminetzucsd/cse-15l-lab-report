@@ -1,7 +1,11 @@
 *Italic bruh*
+
 **Bold bruh**
+
 #HEADING BRUH
+
 ##Heading Bruh
+
 [Link Bruh](./index.md)
 ![Image Bruh](http://ih3.redbubble.net/image.29296497.2511/fc,550x550,white.u3.jpg)
 >Block bruh

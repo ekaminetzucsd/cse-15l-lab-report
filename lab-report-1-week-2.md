@@ -26,10 +26,18 @@ If it isn't already, install openssh (for my package manager, `sudo pacman -S op
 
 *Figure 3: the default (I think) welcome message for ieng6 printing upon login*
 
-## Step 3: Trying Some Commands
+## Step 3: Trying some Commands
 
 Important commands to know once on the filesystem are `cd` followed by the destination to change directories, `ls` to list files in the current directory (with flags like `-l` to also show permissions, `-a` to show hidden files, or `-t` to order by timestamp, figure 4), `pwd` to print the full working directory name, `cp` and `mv` to copy and move files respectively, with `cp -r` copying recursively (`mv` doesn't need this), `touch` and `mkdir` to make files and directories, and `rm` (optionally with `-r` for recursive) to delete them. `cat` also prints the contents of the files you give it as arguments. 
 
 ![ls -lat](./ls-lat.png)
 
 *Figure 4: running `ls -lat` (`-l` meaning long, including file information; `-a` meaning all, including hidden files; and `-t` ordering the files by timestamp)*
+
+## Step 4: Moving Files with SCP
+
+While the command `ssh` allows access to a remote shell, the openssh protocol facilitates much more, including the ability to copy files to and from a remote machine. In particular, the command for this is `scp <origin> [other origin] ... <destination>`, where origins and destination follow the syntax used in ssh followed by a colon and the desired file path (i.e., `[user]@host:~/example.txt`). For a full example, see figure 5 below.
+
+![scp](./scp.png)
+
+Figure 5: copying a file from the local machine to the remote host. Note that the alias 15l is a result of my modification to ~/.ssh/config on my local machine; the standard syntax would read `scp WhereAmI.java cs15lwi22apt@ieng6.ucsd.edu:~/.`

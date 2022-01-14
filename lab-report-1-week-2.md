@@ -6,7 +6,7 @@ This lab report, written in the form of a tutorial, will describe how to log int
 
 ## Step 1: Installing Visual Studio Cod{ium|e}
 
-*Note: with VS Code being the slow, non-native electronJS nightmare (figure 1) it already is, "proprietary" shouldn't be added to that list. The VS Codium project compiles just the MIT-licensed base without any of Microsoft's nonfree blobs or telemetry.*
+*Note: with VS Code being the bloated, non-native electronJS nightmare (figure 1) it already is, "[proprietary](https://code.visualstudio.com/License/)" shouldn't be added to that list. The VS Codium project compiles just the MIT-licensed base without any of Microsoft's nonfree blobs or telemetry.*
 
 This one's pretty simple for real operating systems. For my package manager, the command was `yay -S vscodium-bin`. After that, it's just a matter of opening the integrated terminal and typing `emacs -t .` to get a real text editor, too (figure 2).
 
@@ -40,7 +40,7 @@ While the command `ssh` allows access to a remote shell, the openssh protocol fa
 
 ![scp](./scp.png)
 
-*Figure 5: copying a file from the local machine to the remote host. Note that the alias 15l is a result of my modification to ~/.ssh/config on my local machine; the standard syntax would read `scp WhereAmI.java cs15lwi22apt@ieng6.ucsd.edu:~/.`*
+*Figure 5: copying a file from the local machine to the remote host. Note that the alias 15l is a result of my modification to `~/.ssh/config` on my local machine; the standard syntax would read `scp WhereAmI.java cs15lwi22apt@ieng6.ucsd.edu:~/.`*
 
 ## Step 5: Setting Up SSH Keys
 

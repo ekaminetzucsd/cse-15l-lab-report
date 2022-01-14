@@ -26,4 +26,10 @@ If it isn't already, install openssh (for my package manager, `sudo pacman -S op
 
 *Figure 3: the default (I think) welcome message for ieng6 printing upon login*
 
+## Step 3: Trying Some Commands
 
+Important commands to know once on the filesystem are `cd` followed by the destination to change directories, `ls` to list files in the current directory (with flags like `-l` to also show permissions, `-a` to show hidden files, or `-t` to order by timestamp, figure 4), `pwd` to print the full working directory name, `cp` and `mv` to copy and move files respectively, with `cp -r` copying recursively (`mv` doesn't need this), `touch` and `mkdir` to make files and directories, and `rm` (optionally with `-r` for recursive) to delete them. `cat` also prints the contents of the files you give it as arguments. 
+
+![ls -lat](./ls-lat.png)
+
+*Figure 4: running `ls -lat` (`-l` meaning long, including file information; `-a` meaning all, including hidden files; and `-t` ordering the files by timestamp)*

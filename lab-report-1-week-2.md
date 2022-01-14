@@ -40,4 +40,20 @@ While the command `ssh` allows access to a remote shell, the openssh protocol fa
 
 ![scp](./scp.png)
 
-Figure 5: copying a file from the local machine to the remote host. Note that the alias 15l is a result of my modification to ~/.ssh/config on my local machine; the standard syntax would read `scp WhereAmI.java cs15lwi22apt@ieng6.ucsd.edu:~/.`
+*Figure 5: copying a file from the local machine to the remote host. Note that the alias 15l is a result of my modification to ~/.ssh/config on my local machine; the standard syntax would read `scp WhereAmI.java cs15lwi22apt@ieng6.ucsd.edu:~/.`*
+
+## Step 5: Setting Up SSH Keys
+
+Typing the password to the remote account each time is cumbersome (and also insecure, but there's no way to disable password-based login on the school cluster that I know of), but this can be avoided using ssh keys, which allows a server with a public key cooresponding to a client's private key to allow the client to log in if the client can sign a message announcing his intent to log in to the server with said private key. To generate ssh keys for the first time, one runs `ssh-keygen` locally, which walks one through the process of creating said key (figure 6), then runs `ssh-copy-id <server name>` one time, which prompts a password to prove that the owner of the just-created keypair can log in before copying the public key to the server. If one did not elect to set up a password for his private keys in the `ssh-keygen` step, one can now log into the server normally with `ssh` without being prompted for a password. 
+
+![ssh-keygen](./ssh-keygen.png)
+
+*Figure 6: the first step of the `ssh-keygen` process. The next will ask the user for an optional password; hit enter without typing anything if passwordless login is desired.*
+
+## Step 6: Optimizing Remote Running
+
+If one did not elect to set up his ssh key with a password, shell scripts run as one's user can now access the server without a password. Moreover, the `ssh` command also allows for optional arguments after the remote hostname, which it executes in the default shell upon logging in. This is useful for editing locally, then compiling and/or running one's edited programs on a remote server without much cumbersome terminal input. In particular, the following bash script (figure 7) will copy `WhereAmI.java` to the home directory of the server named `15l`, then compile and execute it on that server. 
+
+![Bash script](./bashscript.png)
+
+*Figure 7: this bash script first copies WhereAmI.java to the remote server, then compiles and, if succesful, runs WhereAmI.java and WhereAmI.class respectively on the remote server, piping output to the client's tty.*

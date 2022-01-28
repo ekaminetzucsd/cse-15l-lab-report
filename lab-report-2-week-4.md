@@ -49,9 +49,22 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
         at MarkdownParse.main(MarkdownParse.java:26)
 ```
 
-This symptom was that MarkdownParse began an infinite loop when the last character of an input file was not the closing parenthesis of a link. The underlying bug that caused this was that the `while` loop initially only checked that `currentIndex`, which was set to one character past the last closing parenthesis, was in bounds; when currentIndex passed the last closing parenthesis, it would be set to `0` in the next iteration of the loop as `indexOf(")", currentIndex)` would return `-1` and `-1 + 1` = `0`, so the loop would search from the start again. I presume the reason this happened to me was because my editor added some kind of trailing character when saving the file, although the git diffs imply that this was not the case so I'm still not totally sure why the check in the `while` loop failed for me but not my group. Regardless, this was the bug and the change clearly solved the issue as well as instances where the trailing character wasn't mysterious.
+This symptom was that MarkdownParse began an infinite loop when the last character of an input file was not the closing parenthesis of a link. The underlying bug that caused this was that the `while` loop initially only checked that `currentIndex`, which was set to one character past the last closing parenthesis, was in bounds; when currentIndex passed the last closing parenthesis, it would be set to `0` in the next iteration of the loop as `indexOf(")", currentIndex)` would return `-1` and `-1 + 1` = `0`, so the loop would search from the start again. I presume the reason this happened to me was because my editor added some kind of trailing character when saving the file, although the git diffs imply that this was not the case so I'm still not totally sure why the check in the `while` loop failed for me but not my group. Regardless, this was the bug and the change (which broke the loop if `nextOpeningBracket == -1`, where `-1` is the return value when `indexOf()` doesn't find a String) clearly solved the issue here as well as in instances where the trailing character wasn't mysterious.
 
 ## Change 3 -- Infinite loop when an opening bracket does not complete a link before the end of the file
 
 ![Diff for change 3](./diff3.png)
 
+[Link to failure-inducing input](https://raw.githubusercontent.com/ekaminetzucsd/markdown-parse/main/test-file3.md)
+
+*Note: Also failed (same bug) on given tests 4, 7, and 8*
+
+Output when this file was passed before changes:
+
+```
+$ javac MarkdownParse.java && java MarkdownParse test-file3.md
+```
+
+*(No output, loops forever)*
+
+This symptom was that MarkdownParse loops forever when a link pattern is started but not closed before the end of the file. The underlying bug is that the check for whether no closing parenthesis is found before the end of the file implemented in Change 2 is not robust enough if the first opening bracket exists but no closing parentheses do, because `nextIndex` is still set to one plus the index of the next closing parenthesis, which is `-1` when it is not found, meaning the next loop searches from `nextIndex = 0` all over again. In the failure-inducing input, this manifested as an infinite loop; unlike the loop in Change 2, however, this loop did not have a quick ending because no elements were added to the output list, meaning Java didn't quickly run out of heap space, hence the lack of an output for a reasonably long time (it's possible some runtime variables could cause exceptions but I didn't feel like sticking around for that).

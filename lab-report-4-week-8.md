@@ -113,7 +113,7 @@ For the case of the escaped brackets, we could add the method described in the s
 
 ```
 start = (markdown.charAt(markdown.indexOf(toFind, start)-1) == "\")?(markdown.indexOf(toFind, start)+1):( markdown.indexOf("`", start);
-inCodeBlock = (markdown.charAt(markdown.indexOf(toFind, start)-1) == "\");
+inCodeBlock = (markdown.charAt(markdown.indexOf(toFind, start)-1) == "\") == inCodeBlock;
 ```
 If given the method added in test 1, this is a rather small change (if not, the method can likely be refactored to still be less than 10 lines but only address escaped brackets).
 

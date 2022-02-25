@@ -40,6 +40,16 @@ java.lang.AssertionError: expected:<[url.com, `google.com, google.com]> but was:
 
 ### Other group's implementation
 
+```
+1) testSnippet1(MarkdownParseTestGroup)
+java.lang.AssertionError: expected:<[url.com, `google.com, google.com]> but was:<[`google.com, google.com, ucsd.edu]>
+        at org.junit.Assert.fail(Assert.java:89)
+        at org.junit.Assert.failNotEquals(Assert.java:835)
+        at org.junit.Assert.assertEquals(Assert.java:120)
+        at org.junit.Assert.assertEquals(Assert.java:146)
+        at MarkdownParseTestGroup.testSnippet1(MarkdownParseTestGroup.java:70)
+```
+
 ### Potential short code changes
 
 This would be easy enough to implement. In particular, this method:
@@ -87,6 +97,16 @@ java.lang.AssertionError: expected:<[a.com, a.com((]> but was:<[a.com, a.com(())
 
 ### Other group's implementation
 
+```
+2) testSnippet2(MarkdownParseTestGroup)
+java.lang.AssertionError: expected:<[a.com, a.com((, example.com]> but was:<[a.com, a.com(()), example.com]>
+        at org.junit.Assert.fail(Assert.java:89)
+        at org.junit.Assert.failNotEquals(Assert.java:835)
+        at org.junit.Assert.assertEquals(Assert.java:120)
+        at org.junit.Assert.assertEquals(Assert.java:146)
+        at MarkdownParseTestGroup.testSnippet2(MarkdownParseTestGroup.java:77)
+```
+
 ### Potential short code changes
 
 For the case of the escaped brackets, we could add the method described in the section on test 1, but with an additional check in the `if` statement with an `&&` that `markdown.charAt(markdown.indexOf(toFind, start)-1) != '\'`, remove the last line and third argument of the `for` loop, and add to the last lines of the `for` loop :
@@ -127,6 +147,28 @@ java.lang.AssertionError: expected:<[]> but was:<[https://ucsd-cse15l-w22.github
 
 ### Other group's implementation
 
+```
+3) testSnippet3(MarkdownParseTestGroup)
+java.lang.AssertionError: expected:<[
+    https://www.twitter.com
+, 
+    https://ucsd-cse15l-w22.github.io/
+, github.com
+
+And there's still some more text after that.
+
+[this link doesn't have a closing parenthesis for a while](https://cse.ucsd.edu/
+
+
+
+]> but was:<[https://ucsd-cse15l-w22.github.io/]>
+        at org.junit.Assert.fail(Assert.java:89)
+        at org.junit.Assert.failNotEquals(Assert.java:835)
+        at org.junit.Assert.assertEquals(Assert.java:120)
+        at org.junit.Assert.assertEquals(Assert.java:146)
+        at MarkdownParseTestGroup.testSnippet3(MarkdownParseTestGroup.java:84)
+```
+
 ### Potential short code changes
 
-This one fails specifically because our group excludes links with spaces, though it would also fail if we simply removed this check because it would include spaces and newline characters. However, the fix is still relatively easy; I have to replace the check in my last `if` statement with a check for whether there are at least 2 newline characters between the parentheses (i.e. `markdown.indexOf("\n",markdown.indexOf("\n", openParen)) < closeParen` if no regex) and trim whitespace on the substring that gets added to `toReturn`, i.e. by calling `.trim` on it.
+This one fails specifically because our group excludes links with spaces, though it would also fail if we simply removed this check because it would include spaces and newline characters in the links. However, the fix is still relatively easy; I have to replace the check in my last `if` statement with a check for whether there are at least 2 newline characters between the parentheses (i.e. `markdown.indexOf("\n",markdown.indexOf("\n", openParen)) < closeParen` if no regex) and trim whitespace on the substring that gets added to `toReturn`, i.e. by calling `.trim` on it. I would also have to change the last line of the loop to set currentIndex to one plus the smaller of `markdown.indexOf("\n",markdown.indexOf("\n", openParen))` and `closeParen`.

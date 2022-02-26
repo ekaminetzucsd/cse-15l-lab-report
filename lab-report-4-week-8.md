@@ -4,12 +4,12 @@
 
 This report will describe the results of adding and running various markdown test cases to the MarkdownParse.java files of my group and the group whose code we reviewed in week 7.
 
-Note: this report uses https://spec.commonmark.org/dingus/ as the "correct" example.
+Note: this report uses [commonmark](https://spec.commonmark.org/dingus/) as the "correct" example.
 
 ## Repositories used
 
-My MarkdownParse: https://github.com/ekaminetzucsd/markdown-parse
-Other group's MarkdownParse: https://github.com/YueSteveYin/MarkDownParseGroup
+[My MarkdownParse](https://github.com/ekaminetzucsd/markdown-parse)
+[Other group's MarkdownParse](https://github.com/YueSteveYin/MarkDownParseGroup)
 
 ## Test 1
 

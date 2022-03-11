@@ -6,7 +6,7 @@ This report will analyze the correctness of the professor's and our group's impl
 
 ## Filtering results
 
-Leaving off from the last lab report, we were given (and modified) a script, `script.sh`, that printed filenames, then the results of running `java MarkdownParse` on those filenames, for each file in the `test-files` directory. A snippet from running this on the professor's implementation is below:
+Prior to the week 9 lab, we were given (and modified) a script, `script.sh`, that printed filenames, then the results of running `java MarkdownParse` on those filenames, for each file in the `test-files` directory. A snippet from running this on the professor's implementation is below:
 
 ![Snippet](scriptsh-snippet.png)
 
@@ -24,7 +24,7 @@ Next, we pipe our implementation's output into the file `output.txt`:
 ~/path/to/our/repo$ sh script.sh > ~/some/directory/output.txt
 ```
 
-Finally, we use `diff -y` on the two files to show them in two easy-to-read columns. We then pipe the output into grep to search for only lines with a pipe or whitespace followed by either angle bracket, with one line of context before each match to also print the filenames, so that we only print cases where the outputs differ:
+Finally, we use `diff -y` on the two files to show them in two easy-to-read columns. We then pipe the output into `grep` to search for only lines with a pipe or whitespace followed by either angle bracket, with one line of context before each match to also print the filenames, so that we only print cases where the outputs differ:
 
 ```
 ~/some/directory$ diff -y output.txt prof-output.txt | grep -B 1 -E "\||\s<|\s>"
@@ -89,7 +89,7 @@ Notice that this implementation isn't perfect. In particular, test case 493 isn'
 
 ## First test: `201.md`
 
-As shown in the diff command above, my group's output is `[]` and the professor's is `[baz]`. In this case, `201.html.test`, which is commonmark's "answer key", indicates that there are no links, just `<p>` tags (so text):
+As shown in the `diff` command above, my group's output is `[]` and the professor's is `[baz]`. In this case, `201.html.test`, which is commonmark's "answer key", indicates that there are no links, just `<p>` tags (so text):
 
 ```
 <p>[foo]: <bar>(baz)</p>
@@ -100,10 +100,10 @@ This implies that the output should be `[]`, so my group has the correct impleme
 
 ## Second test: `577.md`
 
-As shown in the diff command above, my group's output is `[]` and the professor's is `[train.jpg]`. Commonmark indicates that the conversion to HTML should be
+As shown in the `diff` command above, my group's output is `[]` and the professor's is `[train.jpg]`. Commonmark indicates that the conversion to HTML should be
 
 ```
 <p><img src="train.jpg" alt="foo" /></p>
 ```
 
-which contains an `<img>` (image) tag but no `<a>` (link) tags which in turn implies the output should be `[]`, indicating that my group has the correct implementation. The bug present in the professor's implementation is that it doesn't check whether the character before a pair of opening brackets that would otherwise be a link is an exclamation mark, which would make that link an image.
+which contains an `<img>` (image) tag but no `<a>` (link) tags which in turn implies the output should be `[]`, indicating that my group has the correct implementation. The bug present in the professor's implementation is that it doesn't check whether the character before a pair of opening brackets that would otherwise be a link is an exclamation mark, which would make that would-be link an image.

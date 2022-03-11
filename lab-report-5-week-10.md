@@ -85,7 +85,7 @@ test-files/580.md                                               test-files/580.m
 []                                                            | [/url]
 ```
 
-Notice that this implementation isn't perfect. In particular, test case 493 isn't different, but `grep` still printed it because it contained whitespace before an angle bracket. This could be excluded by changing `\s` to something like `[\s^\N]`, but it goes to show that using text manipulation will usually have edge cases. There are other ways to exclude outputs that aren't the same: `diff` has `-suppress-common-lines`, for example, but lacks the ability to provide context in the two-column mode, so it would leave out our filenames; even without `-y`, the direction of the context provided by `-C` can't be specified like `grep` allows with `-B`, so the output would be less readable. This implementation also doesn't distinguish between ArrayLists with one element that is an empty string and empty ArrayLists, though this is arguably still correct if the purpose of MarkdownParse is only to print to standard output.
+Notice that this implementation isn't perfect. In particular, test case 493 isn't different, but `grep` still printed it because it contained whitespace before an angle bracket. This could be excluded by changing `\s` to something like `[\s^\N]`, but it goes to show that using text manipulation will usually have edge cases. There are other ways to exclude outputs that aren't the same: `diff` has `--suppress-common-lines`, for example, but lacks the ability to provide context in the two-column mode, so it would leave out our filenames; even without `-y`, the direction of the context provided by `-C` can't be specified like `grep` allows with `-B`, so the output would be less readable. This implementation also doesn't distinguish between ArrayLists with one element that is an empty string and empty ArrayLists, though this is arguably still correct if the purpose of MarkdownParse is only to print to standard output.
 
 ## First test: `201.md`
 
@@ -96,7 +96,7 @@ As shown in the diff command above, my group's output is `[]` and the professor'
 <p>[foo]</p>
 ```
 
-Thus, my group has the correct implementation. The bug present in the professor's implementation is that it doesn't exclude patterns of brackets and parentheses where there are extra characters between the closing bracket and opening parenthesis.
+This implies that the output should be `[]`, so my group has the correct implementation. The bug present in the professor's implementation is that it doesn't exclude patterns of brackets and parentheses where there are extra characters between the closing bracket and opening parenthesis.
 
 ## Second test: `577.md`
 
@@ -106,4 +106,4 @@ As shown in the diff command above, my group's output is `[]` and the professor'
 <p><img src="train.jpg" alt="foo" /></p>
 ```
 
-which contains an `<img>` (image) tag but no `<a>` (link) tags, indicating that my group has the correct implementation. The bug present in the professor's implementation is that it doesn't check whether the character before a pair of opening brackets that would otherwise be a link is an exclamation mark, which would make that link an image.
+which contains an `<img>` (image) tag but no `<a>` (link) tags which in turn implies the output should be `[]`, indicating that my group has the correct implementation. The bug present in the professor's implementation is that it doesn't check whether the character before a pair of opening brackets that would otherwise be a link is an exclamation mark, which would make that link an image.

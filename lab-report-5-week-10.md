@@ -128,4 +128,4 @@ if(nextOpenBracket > 0 && markdownParse.charAt(nextOpenBracket - 1) == '!') {
 }
 ```
 
-immediately after the line that defines `nextOpenBracket` (which appears to be line 57). This would immediately start searching for a new link pattern after `nextOpenBracket` if it detected that the current link pattern might be an image. It checks whether `nextOpenBracket` is greater than `0` to avoid an `IndexOutOfBoundsException` if the first character of a file is an opening bracket or if the file contains no opening brackets.
+immediately after the line that defines `nextOpenBracket` (which appears to be line 57). This would immediately start searching for a new link pattern after `nextOpenBracket` if it detected that the current link pattern might be an image. It checks whether `nextOpenBracket` is greater than `0` to avoid an `IndexOutOfBoundsException` if the first character of a file is an opening bracket or if there are no opening brackets after `currentIndex`.

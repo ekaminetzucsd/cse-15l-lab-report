@@ -101,13 +101,13 @@ This implies that the output should be `[]`, so my group has the correct impleme
 A simple fix for the professor's bug is adding the lines
 
 ```
-if(nextCloseBracket != -1 && nextCloseBracket + 1 != openParen) {
+if(nextCloseBracket != -1 && openParen != -1 && nextCloseBracket + 1 != openParen) {
 	currentIndex = nextCloseBracket + 1;
 	continue;
 }
 ```
 
-immediately after the line that defines `openParen` (which appears to be line 65). This would immediately start searching for a new link pattern after `nextCloseBracket` if it recognizes that the current pattern cannot be a link because there are characters between the closing bracket and opening parenthesis that would invalidate the link. Note that there are some patterns in the test cases that might have characters between the closing brackets and opening parenthesis of their links that are still valid links according to CommonMark, though these hardly resemble the links we've written MarkdownParse for and would be much more involved changes. However, this change is good enough to rectify this particular bug and pass this particular test case, along with several associated with the same bug.
+immediately after the line that defines `openParen` (which appears to be line 65). This would immediately start searching for a new link pattern after `nextCloseBracket` if it recognizes that the current pattern cannot be a link because there are characters between the closing bracket and opening parenthesis that would invalidate the link. It checks whether `nextCloseBracket` or `openParen` are `-1` to avoid infinite loops. Note that there are some patterns in the test cases that might have characters between the closing brackets and opening parenthesis of their links that are still valid links according to CommonMark, though these hardly resemble the links we've written MarkdownParse for and would be much more involved changes. However, this change is good enough to rectify this particular bug and pass this particular test case, along with several associated with the same bug.
 
 ## Second test: `577.md`
 
@@ -128,4 +128,4 @@ if(nextOpenBracket != 0 && markdownParse.charAt(nextOpenBracket - 1) == '!') {
 }
 ```
 
-immediately after the line that defines `nextOpenBracket` (which appears to be line 57). This would immediately start searching for a new link pattern after `nextOpenBracket` if it detected that the current link pattern might be an image.
+immediately after the line that defines `nextOpenBracket` (which appears to be line 57). This would immediately start searching for a new link pattern after `nextOpenBracket` if it detected that the current link pattern might be an image. It checks whether `nextOpenBracket` is `0` to avoid an `IndexOutOfBoundsException` if the first character of a file is an opening bracket.
